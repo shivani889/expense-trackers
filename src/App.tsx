@@ -320,7 +320,7 @@ export default function App() {
               </button>
             )}
           </div>
-          <ul className="divide-y">
+{/*           <ul className="divide-y">
   {categories.map((c) => {
     const total = monthExpenses
       .filter((e) => e.category === c)
@@ -341,7 +341,38 @@ export default function App() {
       </li>
     );
   })}
-</ul>
+</ul> */}
+
+           <ul className="divide-y">
+            {categories.map((cat) => {
+              const totalCat = (data[selectedMonth]?.expenses || [])
+                .filter((e) => e.category === cat)
+                .reduce((s, e) => s + e.amount, 0);
+              return (
+                <li
+                  key={cat}
+                  className="flex justify-between items-center py-2"
+                >
+                  <span>{cat}</span>
+                  <span className="flex gap-2 items-center">
+                    ₹{totalCat}
+                    <button
+                      onClick={() => startEditCategory(cat)}
+                      className="text-blue-500"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDeleteCategory(cat)}
+                      className="text-red-500"
+                    >
+                      Delete
+                    </button>
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </div>
