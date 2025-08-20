@@ -321,20 +321,27 @@ export default function App() {
             )}
           </div>
           <ul className="divide-y">
-            {categories.map((c) => (
-              <li key={c} className="flex justify-between py-2 items-center">
-                {c}
-                <div className="flex gap-2">
-                  <button onClick={() => startEditCategory(c)} className="text-blue-500">
-                    Edit
-                  </button>
-                  <button onClick={() => handleDeleteCategory(c)} className="text-red-500">
-                    Delete
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+  {categories.map((c) => {
+    const total = monthExpenses
+      .filter((e) => e.category === c)
+      .reduce((s, e) => s + e.amount, 0);
+    return (
+      <li key={c} className="flex justify-between py-2 items-center">
+        <div>
+          {c} {total > 0 && `- ₹${total}`}
+        </div>
+        <div className="flex gap-2">
+          <button onClick={() => startEditCategory(c)} className="text-blue-500">
+            Edit
+          </button>
+          <button onClick={() => handleDeleteCategory(c)} className="text-red-500">
+            Delete
+          </button>
+        </div>
+      </li>
+    );
+  })}
+</ul>
         </div>
       </div>
     </div>
